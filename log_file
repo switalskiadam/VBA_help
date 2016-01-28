@@ -1,0 +1,61 @@
+
+Sub Workbook_Check()
+    
+    'Create worksheet if one is not made
+    For i = 1 To Worksheets.Count
+        
+        If Worksheets(i).Name = "Log" Then
+            exists = True
+        Else
+        End If
+    Next i
+        
+    If Not exists Then
+        Sheets.Add.Name = "Log"
+    End If
+    
+End Sub
+
+Sub HideSheet()
+
+    Sheets("Log").Visible = xlVeryHidden
+    
+End Sub
+
+Sub UnHideSheet()
+
+    Sheets("Log").Visible = True
+    
+End Sub
+
+Sub LogUser()
+
+    Sheets("Log").Select
+    
+    If Range("A1") <> "UserName" Then
+        Range("A1").Select
+        ActiveCell.FormulaR1C1 = "UserName"
+        Range("B1").Select
+        ActiveCell.FormulaR1C1 = "Date_Time"
+        Range("C1").Select
+        ActiveCell.FormulaR1C1 = "User_task"
+    End If
+    
+    StartRow = Application.WorksheetFunction.CountA(Range("A1:A10000000")) + 1
+    
+    Cells(StartRow, 1).Value = Environ("Username")
+    Cells(StartRow, 2).Value = Now()
+    Cells(StartRow, 3).Value = "Open"
+    
+
+End Sub
+
+Sub User_Save()
+    StartRow = Application.WorksheetFunction.CountA(Range("A1:A10000000")) + 1
+    
+    Cells(StartRow, 1).Value = Environ("Username")
+    Cells(StartRow, 2).Value = Now()
+    Cells(StartRow, 3).Value = "Save"
+
+
+End Sub
