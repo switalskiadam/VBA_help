@@ -41,21 +41,28 @@ Sub LogUser()
         ActiveCell.FormulaR1C1 = "User_task"
     End If
     
-    StartRow = Application.WorksheetFunction.CountA(Range("A1:A10000000")) + 1
+    StartRow = Application.WorksheetFunction.CountA(Range("A1:A1000000")) + 1
     
     Cells(StartRow, 1).Value = Environ("Username")
     Cells(StartRow, 2).Value = Now()
     Cells(StartRow, 3).Value = "Open"
-    
+
 
 End Sub
 
 Sub User_Save()
-    StartRow = Application.WorksheetFunction.CountA(Range("A1:A10000000")) + 1
     
-    Cells(StartRow, 1).Value = Environ("Username")
-    Cells(StartRow, 2).Value = Now()
-    Cells(StartRow, 3).Value = "Save"
+
+    Sheets("Log").Select
+    
+    StartRow = Application.WorksheetFunction.CountA(Range("A1:A1000000")) + 1
+    
+    Sheets("Log").Cells(StartRow, 1).Value = Environ("Username")
+    Sheets("Log").Cells(StartRow, 2).Value = Now()
+    Sheets("Log").Cells(StartRow, 3).Value = "Save"
+
 
 
 End Sub
+
+
