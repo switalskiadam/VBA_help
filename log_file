@@ -65,4 +65,31 @@ Sub User_Save()
 
 End Sub
 
+## Master calls
+
+Private Sub Workbook_open()
+
+    Application.ScreenUpdating = False
+    'Dim GetBook As String
+    GetBook = ThisWorkbook.Name
+    
+    Application.Run "'" & GetBook & "'" & "!Workbook_Check"
+    Application.Run "'" & GetBook & "'" & "!UnHideSheet"
+    Application.Run "'" & GetBook & "'" & "!LogUser"
+    Application.Run "'" & GetBook & "'" & "!HideSheet"
+    ActiveWorkbook.Save
+
+End Sub
+
+Private Sub Workbook_BeforeSave(ByVal SaveASUI As Boolean, Cancel As Boolean)
+    
+    Application.ScreenUpdating = False
+    GetBook = ThisWorkbook.Name
+    Application.Run "'" & GetBook & "'" & "!UnHideSheet"
+    Application.Run "'" & GetBook & "'" & "!User_Save"
+    Application.Run "'" & GetBook & "'" & "!HideSheet"
+
+
+End Sub
+
 
