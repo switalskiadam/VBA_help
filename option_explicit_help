@@ -1,0 +1,49 @@
+Option Explicit
+
+Sub FindAgents()
+    Dim rngA As Range
+    Dim shtDATA As Worksheet
+    Dim shtSUM As Worksheet
+    Dim n As Integer
+    
+    Set shtDATA = ThisWorkbook.Sheets("Data")
+    Set shtSUM = ThisWorkbook.Sheets("Summary")
+    Set rngA = shtDATA.Columns(5)
+    
+    'Clear contents of old report
+    shtSUM.Columns(4).ClearContents
+    'Copy all agents to summary
+    rngA.Copy
+    shtSUM.Cells(1, 4).PasteSpecial xlPasteValues
+    'Remove dupes
+    shtSUM.Columns(4).RemoveDuplicates Columns:=Array(1), Header:=xlYes
+    'Number of agents
+    n = Application.WorksheetFunction.CountA(shtSUM.Columns(4))
+    'Move range
+    shtSUM.Range(shtSUM.Cells(1, 4), shtSUM.Cells(n, 4)).Cut Destination:=shtSUM.Cells(10, 4)
+    
+
+    'Change header
+    shtSUM.Cells(10, 4).Value = "Agents"
+    
+End Sub
+
+Sub AddFormulas()
+    Dim rngB As Range
+    Dim rngC As Range
+    Dim shtSUM As Worksheet
+    Dim n As Integer
+    
+    Set shtSUM = ThisWorkbook.Sheets("Summary")
+    Set rngB = shtSUM.Range(shtSUM.Cells(5, 6), shtSUM.Cells(5, 19))
+    'Number of agents
+    n = Application.WorksheetFunction.CountA(shtSUM.Columns(4)) - 1
+    Set rngC = shtSUM.Range(shtSUM.Cells(11, 6), shtSUM.Cells(n + 10, 19))
+    
+    'Copy formulas
+    rngB.Copy
+    rngC.PasteSpecial xlPasteFormulas
+    
+    Worksheet.Calculate
+    
+End Sub
