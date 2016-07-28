@@ -1,0 +1,8 @@
+Private Sub worksheet_change(ByVal target As Range)
+
+If Not Application.Intersect(ThisWorkbook.Sheets("Summary").Range("$G$7"), Range(target.Address)) Is Nothing Then
+Sheets("Summary").Calculate
+Else
+End If
+
+End Sub
